@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "944630222512",
+    "firebase_url": "https://imuseum-1527076668077.firebaseio.com",
+    "project_id": "imuseum-1527076668077",
+    "storage_bucket": "imuseum-1527076668077.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944630222512:android:e997d00de5ed5f4b",
+        "android_client_info": {
+          "package_name": "com.android.iseasoft.imuseum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944630222512-43fvafud7aenufm7hd0iuu73phk287qh.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "944630222512-43fvafud7aenufm7hd0iuu73phk287qh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlg1AoyFXOwIPvV88clodZPWFFE0CqF78"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
