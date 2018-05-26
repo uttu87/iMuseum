@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.android.iseasoft.imuseum.BuildConfig;
 import com.android.iseasoft.imuseum.R;
+import com.android.iseasoft.imuseum.adapters.InfoWindowListener;
 import com.android.iseasoft.imuseum.adapters.MarkerInfoWindowAdapter;
 import com.android.iseasoft.imuseum.model.museum.Museum;
 import com.android.iseasoft.imuseum.model.museum.MuseumData;
@@ -30,6 +31,9 @@ import com.android.iseasoft.imuseum.utils.Define;
 import com.android.iseasoft.imuseum.utils.DownloadPolyline;
 import com.android.iseasoft.imuseum.utils.LogUtil;
 import com.android.iseasoft.imuseum.utils.ParsePolyline;
+import com.appolica.interactiveinfowindow.InfoWindow;
+import com.appolica.interactiveinfowindow.InfoWindowManager;
+import com.appolica.interactiveinfowindow.fragment.MapInfoWindowFragment;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -60,11 +64,14 @@ import static android.content.Context.LOCATION_SERVICE;
  * A simple {@link Fragment} subclass.
  */
 public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener,
-        GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
+        GoogleMap.OnMyLocationClickListener, OnMapReadyCallback, InfoWindowManager.WindowShowListener {
 
     private GoogleMap mMap;
     private MuseumData mMuseumData;
     private Polyline mPolyline;
+
+    private InfoWindow formWindow;
+    private InfoWindowManager infoWindowManager;
 
     private float LOCATION_REFRESH_DISTANCE = 1;
     private long LOCATION_REFRESH_TIME = 100;
@@ -93,9 +100,14 @@ public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocatio
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_museum_map, container, false);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
+        //SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
+        //        .findFragmentById(R.id.museummap);
+        final MapInfoWindowFragment mapInfoWindowFragment = (MapInfoWindowFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.museummap);
-        mapFragment.getMapAsync(this);
+        mapInfoWindowFragment.getMapAsync(this);
+        infoWindowManager = mapInfoWindowFragment.infoWindowManager();
+        infoWindowManager.setHideOnFling(true);
+        infoWindowManager.setWindowShowListener(this);
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -153,21 +165,41 @@ public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocatio
                                 markerOptions.position(location);
                                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.housepoint));
                                 Marker marker = mMap.addMarker(markerOptions);
-                                marker.setTag(museum);
+                                //marker.setTag(museum);
+
+                                final int offsetX = (int) getResources().getDimension(R.dimen.marker_offset_x);
+                                final int offsetY = (int) getResources().getDimension(R.dimen.marker_offset_y);
+
+                                final InfoWindow.MarkerSpecification markerSpec =
+                                        new InfoWindow.MarkerSpecification(offsetX, offsetY);
+                                FormFragment formFragment  = new FormFragment(museum, new InfoWindowListener() {
+                                    @Override
+                                    public void onClickListener(Object object) {
+                                        final Museum museum1 = (Museum)object;
+                                        LatLng latLng = new LatLng(museum1.getLocation().getLat(), museum1.getLocation().getLng());
+                                        directionToMuseumPlace(latLng);
+                                    }
+                                });
+
+                                InfoWindow infoWindow = new InfoWindow(marker, markerSpec, formFragment);
+                                marker.setTag(infoWindow);
 
                                 // Setting a custom info window adapter for the google map
-                                MarkerInfoWindowAdapter markerInfoWindowAdapter = new MarkerInfoWindowAdapter(getContext());
-                                mMap.setInfoWindowAdapter(markerInfoWindowAdapter);
+                                //MarkerInfoWindowAdapter markerInfoWindowAdapter = new MarkerInfoWindowAdapter(getContext());
+                                //mMap.setInfoWindowAdapter(markerInfoWindowAdapter);
 
 
                                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                     @Override
                                     public boolean onMarkerClick(Marker marker) {
-                                        if(marker.isInfoWindowShown()){
-                                            marker.hideInfoWindow();
-                                        } else {
-                                            marker.showInfoWindow();
-                                        }
+                                        //if(marker.isInfoWindowShown()){
+                                        //    marker.hideInfoWindow();
+                                        //} else {
+                                        //    marker.showInfoWindow();
+                                        //}
+                                        InfoWindow form = (InfoWindow)marker.getTag();
+                                        infoWindowManager.toggle(form, true);
+
                                         return false;
                                     }
                                 });
@@ -175,15 +207,18 @@ public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocatio
                                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                     @Override
                                     public void onInfoWindowClick(Marker marker) {
-                                        if(marker.isInfoWindowShown()){
-                                            marker.hideInfoWindow();
-                                        } else {
-                                            marker.showInfoWindow();
-                                        }
+                                        //if(marker.isInfoWindowShown()){
+                                        //    marker.hideInfoWindow();
+                                        //} else {
+                                        //    marker.showInfoWindow();
+                                        //}
 
-                                        Museum museum1 = (Museum) marker.getTag();
-                                        LatLng latLng = new LatLng(museum1.getLocation().getLat(), museum1.getLocation().getLng());
-                                        directionToMuseumPlace(latLng);
+                                        //Museum museum1 = (Museum) marker.getTag();
+                                        //LatLng latLng = new LatLng(museum1.getLocation().getLat(), museum1.getLocation().getLng());
+                                        //directionToMuseumPlace(latLng);
+
+                                        InfoWindow form = (InfoWindow)marker.getTag();
+                                        infoWindowManager.toggle(form, true);
                                     }
                                 });
 
@@ -459,5 +494,25 @@ public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocatio
                         });
             }
         }
+    }
+
+    @Override
+    public void onWindowShowStarted(@NonNull InfoWindow infoWindow) {
+
+    }
+
+    @Override
+    public void onWindowShown(@NonNull InfoWindow infoWindow) {
+
+    }
+
+    @Override
+    public void onWindowHideStarted(@NonNull InfoWindow infoWindow) {
+
+    }
+
+    @Override
+    public void onWindowHidden(@NonNull InfoWindow infoWindow) {
+
     }
 }

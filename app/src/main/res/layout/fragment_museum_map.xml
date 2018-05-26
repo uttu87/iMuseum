@@ -5,5 +5,5 @@
     android:layout_height="match_parent"
     tools:context=".view.MuseumMapFragment"
     android:id="@+id/museummap"
-    android:name="com.google.android.gms.maps.SupportMapFragment" >
+    android:name="com.appolica.interactiveinfowindow.fragment.MapInfoWindowFragment" >
 </fragment>

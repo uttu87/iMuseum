@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/_140sdp"
-    android:layout_height="@dimen/_100sdp"
+    android:layout_width="@dimen/_200sdp"
+    android:layout_height="@dimen/_140sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <RelativeLayout
@@ -11,7 +11,7 @@
         <ImageView
             android:id="@+id/info_window_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
+            android:layout_height="@dimen/_80sdp"
             android:background="@drawable/thumb"
             android:scaleType="centerCrop"/>
 
@@ -34,9 +34,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/close"
                     android:scaleType="centerCrop"
-                    android:padding="@dimen/_1sdp"
-                    android:layout_marginTop="@dimen/_1sdp"
-                    android:layout_marginRight="@dimen/_1sdp"
+                    android:padding="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginRight="@dimen/_2sdp"
                     android:layout_alignParentRight="true"/>
 
             </RelativeLayout>
@@ -52,7 +52,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/_1sdp"/>
+                android:layout_marginTop="@dimen/_8sdp"/>
 
             <TextView
                 android:id="@+id/museum_address_text"
@@ -79,23 +79,23 @@
 
         <Button
             android:id="@+id/btn_detail"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_40sdp"
             android:background="@drawable/button_border"
             android:text="Detail"
             android:textSize="12sp"
             android:textColor="@color/colorBackground"
-            android:layout_margin="@dimen/_1sdp" />
+            android:layout_margin="@dimen/_5sdp" />
 
         <Button
             android:id="@+id/btn_direction"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_40sdp"
             android:background="@drawable/button_border"
             android:text="Direction"
             android:textSize="12sp"
             android:textColor="@color/colorBackground"
-            android:layout_margin="@dimen/_1sdp"/>
+            android:layout_margin="@dimen/_5sdp"/>
     </LinearLayout>
 
 </LinearLayout>
