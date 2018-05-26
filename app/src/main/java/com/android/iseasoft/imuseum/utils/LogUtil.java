@@ -3,7 +3,7 @@ package com.android.iseasoft.imuseum.utils;
 import android.util.Log;
 
 public class LogUtil {
-    public static boolean bIsEnable = false;
+    public static boolean bIsEnable = true;
 
     public static void d(String tag, String msg){
         if(bIsEnable)

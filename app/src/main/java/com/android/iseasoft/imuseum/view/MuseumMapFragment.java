@@ -120,6 +120,7 @@ public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocatio
             return view;
         }
 
+        mCurrentLatLng = new LatLng(16.0585469,108.2397508);//set template
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         // Inflate the layout for this fragment
@@ -255,6 +256,7 @@ public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocatio
 
     private void directionToMuseumPlace(LatLng desLatLng){
         if(mCurrentLatLng == null){
+            LogUtil.d("@hai.phamvan", "Can not direction, mCurrentLatLng is null");
             return;
         }
 
@@ -265,7 +267,7 @@ public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocatio
         url = url.replace("DES_LONGITUDE", Double.toString(desLatLng.longitude));
         url = url.replace("GOOGLE_MAP_API_KEY", Define.GOOGLE_MAP_API_DIRECTION_KEY);
 
-        //LogUtil.d("@hai.phamvan", url);
+        LogUtil.d("@hai.phamvan", url);
 
         try {
 
@@ -277,7 +279,7 @@ public class MuseumMapFragment extends Fragment implements GoogleMap.OnMyLocatio
 
             PolylineOptions polylineOptions = new PolylineOptions();
             for (LatLng value: latLngs){
-                //LogUtil.d("@hai.phamvan", value.toString());
+                LogUtil.d("@hai.phamvan", value.toString());
                 polylineOptions.add(value);
             }
 
