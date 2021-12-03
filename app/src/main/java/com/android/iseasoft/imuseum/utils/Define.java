@@ -13,6 +13,6 @@ public class Define {
     public static final int TIME_TO_MOVE_CAMERA = 3000;
     public static final int ZOOM_VALUE = 15;
     public static final int POLYLINE_COLOR = 0xFF743D;
-    public static final String GOOGLE_MAP_API_DIRECTION_KEY = "AIzaSyDUnXi5a_64MhnUDrL03BJhlVL-uiW2xf4";
+    public static final String GOOGLE_MAP_API_DIRECTION_KEY = "";
     public static final String GOOGLE_MAP_API_DIRECTION_URL = "https://maps.googleapis.com/maps/api/directions/json?origin=SOURCE_LATITUDE,SOURCE_LONGITUDE&destination=DES_LATITUDE,DES_LONGITUDE&key=GOOGLE_MAP_API_KEY";
 }
